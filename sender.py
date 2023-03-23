@@ -17,9 +17,9 @@ def sender_program():
     print("Connection from: " + str(address))
 
     # j = 0
-    p = 19
-    q = 17
-    e = 7
+    # p = 19
+    # q = 17
+    # e = 7
     # while j < 3:
     #     s_messg = conn.recv(1024).decode()
     #     print(s_messg)
@@ -31,8 +31,18 @@ def sender_program():
     #         e = int(s_messg)
     #     j += 1
 
-    print(p, q, e)    
+      
+    p = int(input(' enter p -> '))
+    q = int(input(' enter q -> '))
+    e = int(input(' enter e -> '))
 
+    conn.send(str(p).encode())  # send data to the client
+    conn.send(str(q).encode())  # send data to the client
+    conn.send(str(e).encode())  # send data to the client
+
+
+
+    # print(p, q, e)  
     while True:
         # receive data stream. it won't accept data packet greater than 1024 bytes
         # data = conn.recv(1024).decode()
@@ -40,10 +50,10 @@ def sender_program():
         # if data is not received break
         # break
         # print("from connected user: " + str(data))
-        data = input(' -> ')
-        data_converted = encryption_functions.encryption(data)
-        print(data_converted)
-        conn.send(data.encode())  # send data to the client
+        message = input(' enter message -> ')
+        C = encryption_functions.encryption(message, p, q, e)
+        print(C)
+        conn.send(C.encode())  # send data to the client
 
     conn.close()  # close the connection
 

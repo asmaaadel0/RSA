@@ -48,8 +48,25 @@ def convertToString(number):
     return string[::-1]
 
 
-def encryption(message):
+def power_mod_solve(m, e, n):
+    if e == 0:
+        return 1 % n
+    elif e == 1:
+        return m % n
+    else:
+        b = power_mod_solve(m, e // 2, n)
+        b = b * b % n
+    if e % 2 == 0:
+        return b
+    else:
+        return b * e % n
+
+
+def encryption(message, p, q, e):
     splited_message = splitToGroups(message)
-    converted_message_to_int = convertToInt(splited_message)
-    converted_message_to_string = convertToString(converted_message_to_int)
-    return converted_message_to_string
+    m = convertToInt(splited_message)
+    print(m)
+    c = power_mod_solve(m, e, p * q)
+    print(c)
+    cipherText = convertToString(c)
+    return cipherText
