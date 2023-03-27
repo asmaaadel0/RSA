@@ -20,31 +20,42 @@ def convertToInt(splited_message):
         plaintext_number = 0
         number = 0
         i = 4
+        # print(group)
         for char in group:
-            if (ord(char) in range(48, 57)):
+            # print('ord(char)', ord(char))
+            if (ord(char) == 48):
+                number = 37 #should be removed
+            elif (ord(char) in range(47, 58)):
                 number = ord(char) - 48
-            elif (ord(char) in range(97, 122)):
+                # print('number', number)
+            elif (ord(char) in range(97, 123)):
                 number = ord(char) - 87
+                # print('number = ', number)
             else:
                 number = 36
-            plaintext_number = plaintext_number + 37**i * number
+            plaintext_number = plaintext_number + 38**i * number #should be 37
             i = i - 1
         numbers.append(plaintext_number)
-    return numbers[0]
+        # print('numbers = ', numbers)
+    return numbers
 
 
 def convertToString(number):
     string = ''
     char = ''
     while number > 0:
-        if (number % 37 in range(0, 9)):
-            char = str(number % 37)
-        elif (number % 37 in range(10, 35)):
-            char = chr(number % 37 + 87)
+        if (number % 38 == 37):
+            char = str(0) #should be removed
+        elif (number % 38 in range(0, 10)): #should be 37
+            char = str(number % 38) #should be 37
+            # print('number = ', char)
+        elif (number % 38 in range(10, 36)): #should be 37
+            char = chr(number % 38 + 87) #should be 37
         else:
             char = chr(32)
-        number //= 37
+        number //= 38 #should be 37
         string += char
+        # print('string = ', string[::-1])
     return string[::-1]
 
 
@@ -65,8 +76,24 @@ def power_mod_solve(m, e, n):
 def encryption(message, p, q, e):
     splited_message = splitToGroups(message)
     m = convertToInt(splited_message)
-    print(m)
-    c = power_mod_solve(m, e, p * q)
-    print(c)
-    cipherText = convertToString(c)
+    cipherText = ''
+    for i in m:
+        # c = pow(int(i), e) % (p*q) # commenntttt
+        # j = convertToString(c) # commenntttt
+        # print(i)
+        j = convertToString(i)
+        print(j)
+        cipherText = cipherText + j
+    # print('int m = ', m)
+    # print('convertToInt encryption', m)
+    # c = power_mod_solve(m, e, p * q)
+
+    # c = pow(m, e) % (p*q) # commenntttt
+    # print('before convert to string encryption:', c)
+    # cipherText = convertToString(c) # commenntttt
+    # print('string c= ', cipherText)
+
+    # print(cipherText)
+    # print(cipherText)
+    # cipherText = c
     return cipherText

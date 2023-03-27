@@ -1,5 +1,6 @@
 import socket
-import generate_key
+import decryption_functions
+import encryption_functions
 
 
 def reciever_program():
@@ -63,18 +64,19 @@ def reciever_program():
     #     j += 1
     # client_socket.send(messg.encode())
     # message = input(" -> ")  # take input
-    p = client_socket.recv(1024).decode()  # receive response
-    q = client_socket.recv(1024).decode()  # receive response
-    e = client_socket.recv(1024).decode()  # receive response
+    p = int(client_socket.recv(1024).decode())  # receive response
+    q = int(client_socket.recv(1024).decode())  # receive response
+    e = int(client_socket.recv(1024).decode())  # receive response
 
     # print(p, q, e)
 
     while True:
         # client_socket.send(message.encode())  # send message
-        data = client_socket.recv(1024).decode()  # receive response
-        
+        C = client_socket.recv(1024).decode()  # receive response
 
-        print('Received from server: ' + data)  # show in terminal
+        print('cipher text received: ' + C)  # show in terminal
+        decryptedMessage = decryption_functions.decryption(C, p, q, e)
+        print("original message from sender: ", decryptedMessage)
 
         # message = input(" -> ")  # again take input
 
@@ -83,4 +85,3 @@ def reciever_program():
 
 if __name__ == '__main__':
     reciever_program()
-

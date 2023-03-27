@@ -32,9 +32,12 @@ def sender_program():
     #     j += 1
 
       
-    p = int(input(' enter p -> '))
-    q = int(input(' enter q -> '))
-    e = int(input(' enter e -> '))
+    # p = int(input(' enter p -> '))
+    # q = int(input(' enter q -> '))
+    # e = int(input(' enter e -> '))
+    p = 17
+    q = 11
+    e = 7
 
     conn.send(str(p).encode())  # send data to the client
     conn.send(str(q).encode())  # send data to the client
@@ -52,7 +55,6 @@ def sender_program():
         # print("from connected user: " + str(data))
         message = input(' enter message -> ')
         C = encryption_functions.encryption(message, p, q, e)
-        print(C)
         conn.send(C.encode())  # send data to the client
 
     conn.close()  # close the connection
