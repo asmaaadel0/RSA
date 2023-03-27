@@ -20,23 +20,16 @@ def convertToInt(splited_message):
         plaintext_number = 0
         number = 0
         i = 4
-        # print(group)
         for char in group:
-            # print('ord(char)', ord(char))
-            if (ord(char) == 48):
-                number = 37 #should be removed
-            elif (ord(char) in range(47, 58)):
+            if (ord(char) in range(47, 58)):
                 number = ord(char) - 48
-                # print('number', number)
             elif (ord(char) in range(97, 123)):
                 number = ord(char) - 87
-                # print('number = ', number)
             else:
                 number = 36
-            plaintext_number = plaintext_number + 38**i * number #should be 37
+            plaintext_number = plaintext_number + 37**i * number
             i = i - 1
         numbers.append(plaintext_number)
-        # print('numbers = ', numbers)
     return numbers
 
 
@@ -44,18 +37,14 @@ def convertToString(number):
     string = ''
     char = ''
     while number > 0:
-        if (number % 38 == 37):
-            char = str(0) #should be removed
-        elif (number % 38 in range(0, 10)): #should be 37
-            char = str(number % 38) #should be 37
-            # print('number = ', char)
-        elif (number % 38 in range(10, 36)): #should be 37
-            char = chr(number % 38 + 87) #should be 37
+        if (number % 37 in range(0, 10)):
+            char = str(number % 37)
+        elif (number % 37 in range(10, 36)):
+            char = chr(number % 37 + 87)
         else:
             char = chr(32)
-        number //= 38 #should be 37
+        number //= 37
         string += char
-        # print('string = ', string[::-1])
     return string[::-1]
 
 
@@ -82,7 +71,7 @@ def encryption(message, p, q, e):
         # j = convertToString(c) # commenntttt
         # print(i)
         j = convertToString(i)
-        print(j)
+        # print(j)
         cipherText = cipherText + j
     # print('int m = ', m)
     # print('convertToInt encryption', m)
