@@ -1,6 +1,7 @@
 import socket
 import encryption_functions
 
+mySender= encryption_functions.Sender() 
 
 def sender_program():
     # get the hostname
@@ -31,21 +32,20 @@ def sender_program():
     #         e = int(s_messg)
     #     j += 1
 
-      
     # p = int(input(' enter p -> '))
     # q = int(input(' enter q -> '))
     # e = int(input(' enter e -> '))
-    p = 17
-    q = 11
-    e = 7
+    p = 6353
+    q = 8641
+    e = 3823
 
     conn.send(str(p).encode())  # send data to the client
     conn.send(str(q).encode())  # send data to the client
     conn.send(str(e).encode())  # send data to the client
 
+    # print(p, q, e)
+    mySender.set_public_key(p,q,e)  
 
-
-    # print(p, q, e)  
     while True:
         # receive data stream. it won't accept data packet greater than 1024 bytes
         # data = conn.recv(1024).decode()
@@ -54,7 +54,7 @@ def sender_program():
         # break
         # print("from connected user: " + str(data))
         message = input(' enter message -> ')
-        C = encryption_functions.encryption(message, p, q, e)
+        C = mySender.encryption(message)
         conn.send(C.encode())  # send data to the client
 
     conn.close()  # close the connection

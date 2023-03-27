@@ -1,6 +1,7 @@
 import socket
 import decryption_functions
-import encryption_functions
+
+myReceiver = decryption_functions.Receiver()
 
 
 def reciever_program():
@@ -70,12 +71,16 @@ def reciever_program():
 
     # print(p, q, e)
 
+    myReceiver.p = int(p)
+    myReceiver.q = int(q)
+    myReceiver.e = int(e)
+
     while True:
         # client_socket.send(message.encode())  # send message
         C = client_socket.recv(1024).decode()  # receive response
 
         print('cipher text received: ' + C)  # show in terminal
-        decryptedMessage = decryption_functions.decryption(C, p, q, e)
+        decryptedMessage = myReceiver.decryption(C)
         print("original message from sender: ", decryptedMessage)
 
         # message = input(" -> ")  # again take input
