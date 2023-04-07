@@ -1,7 +1,9 @@
 import socket
 import encryption_functions
+import common_functions
 
-mySender= encryption_functions.Sender() 
+mySender = encryption_functions.Sender()
+
 
 def sender_program():
     # get the hostname
@@ -17,34 +19,13 @@ def sender_program():
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
 
-    # j = 0
-    # p = 19
-    # q = 17
-    # e = 7
-    # while j < 3:
-    #     s_messg = conn.recv(1024).decode()
-    #     print(s_messg)
-    #     if j == 0:
-    #         p = int(s_messg)
-    #     if j == 1:
-    #         q = int(s_messg)
-    #     if j == 2:
-    #         e = int(s_messg)
-    #     j += 1
+    p = int(conn.recv(1024).decode())  # receive response
+    q = int(conn.recv(1024).decode())  # receive response
+    e = int(conn.recv(1024).decode())  # receive response
 
-    # p = int(input(' enter p -> '))
-    # q = int(input(' enter q -> '))
-    # e = int(input(' enter e -> '))
-    p = 6353
-    q = 8641
-    e = 3823
-
-    conn.send(str(p).encode())  # send data to the client
-    conn.send(str(q).encode())  # send data to the client
-    conn.send(str(e).encode())  # send data to the client
-
+    print('recieving p, q done.')
     # print(p, q, e)
-    mySender.set_public_key(p,q,e)  
+    mySender.set_public_key(p, q, e)
 
     while True:
         # receive data stream. it won't accept data packet greater than 1024 bytes
@@ -54,6 +35,14 @@ def sender_program():
         # break
         # print("from connected user: " + str(data))
         message = input(' enter message -> ')
+
+        splited_message = common_functions.splitToGroups(message)
+        m = common_functions.convertToInt(splited_message)
+        while (max(m) > p*q):
+            print("max allowed length of message is only ")
+            message = input("-> ")
+            splited_message = common_functions.splitToGroups(message)
+            m = common_functions.convertToInt(splited_message)
         C = mySender.encryption(message)
         conn.send(C.encode())  # send data to the client
 

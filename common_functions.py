@@ -1,5 +1,6 @@
 import numpy as np
-
+# import random
+# import sympy
 
 def splitToGroups(message):
     splited_message = []
@@ -60,3 +61,12 @@ def extended_euclidean_algo(a, b):
     (x, y) = extended_euclidean_algo(b, a % b)
     k = a // b
     return (y, x - k * y)
+
+# def generate_pq(n):
+#     p=random.getrandbits(int(n/2))
+#     q=random.getrandbits(int(n/2))
+#     while not sympy.isprime(p):
+#         p=random.getrandbits(int(n/2))
+#     while not sympy.isprime(q) or p==q:
+#         q=random.getrandbits(int(n/2))
+#     return p,q
