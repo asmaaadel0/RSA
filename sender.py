@@ -19,26 +19,19 @@ def sender_program():
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
 
-    p = int(conn.recv(1024).decode())  # receive response
-    q = int(conn.recv(1024).decode())  # receive response
     e = int(conn.recv(1024).decode())  # receive response
+    n = int(conn.recv(1024).decode())  # receive response
 
-    print('recieving p, q done.')
+    print('recieving public key is done.')
     # print(p, q, e)
-    mySender.set_public_key(p, q, e)
+    mySender.set_public_key(e, n)
 
     while True:
-        # receive data stream. it won't accept data packet greater than 1024 bytes
-        # data = conn.recv(1024).decode()
-        # if not data:
-        # if data is not received break
-        # break
-        # print("from connected user: " + str(data))
         message = input(' enter message -> ')
 
         splited_message = common_functions.splitToGroups(message)
         m = common_functions.convertToInt(splited_message)
-        while (max(m) > p*q):
+        while (max(m) > n):
             print("max allowed length of message is only ")
             message = input("-> ")
             splited_message = common_functions.splitToGroups(message)

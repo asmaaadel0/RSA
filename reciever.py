@@ -3,44 +3,30 @@ import decryption_functions
 import sympy
 import generate_key
 import time
+import random
 
 myReceiver = decryption_functions.Receiver()
 
 
 def reciever_program():
 
-    # test_file = open("test_cases.txt", "r")
-    # lines = test_file.read().splitlines()
-    # i = 0
-    # e = ""
-    # while i < len(lines)-1:
-    #     # read the message and the public key
-    #     if lines[i] != "" or lines[i] != " ":
-    #         p = int(lines[i])
-    #     if lines[i+1] != "" or lines[i] != " ":
-    #         q = int(lines[i+1])
-    #     if (i+2) <= (len(lines)-1):
-    #         e = lines[i+2]
-    #     i += 3
-    # test_file.close()  # close the file
 
-    p = int(input(' enter p -> '))
-    q = int(input(' enter q -> '))
+    print("Generate p,q.... \n")
+    p = sympy.randprime((2047), (20048)-1)
+    while True:
+        q = sympy.randprime((2047), (20048)-1)
+        if p != q:
+            break
 
-    p = 2953
-    q = 1061
+    # Print the values of p and q
+    print("p:", p)
+    print("q:", q)
+
+    # p = 40351
+    # q = 42323
     # e = 3823
 
-    print("Validate p,q.... \n")
-
-    # check that p and q are primes
-    if not sympy.isprime(p):
-        print(" p must be prime")
-        exit()
-
-    if not sympy.isprime(q):
-        print(" q must be prime")
-        exit()
+    print("Generation done! \n")
 
     e = generate_key.generate_e((p-1) * (q-1))
 
@@ -52,20 +38,22 @@ def reciever_program():
 
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
-    time.sleep(1)
 
-    client_socket.send(str(p).encode())  # send data to the client
+    # client_socket.send(str(p).encode())  # send data to the client
     myReceiver.p = int(p)
-    time.sleep(1)
+    # time.sleep(1)
 
-    client_socket.send(str(q).encode())  # send data to the client
+    # client_socket.send(str(q).encode())  # send data to the client
     myReceiver.q = int(q)
-    time.sleep(1)
+    # time.sleep(1)
 
     client_socket.send(str(e).encode())  # send data to the client
     myReceiver.e = int(e)
+    time.sleep(1)
 
-    print('sending p, q done.')
+    client_socket.send(str(p*q).encode())  # send data to the client
+
+    print('sending public key is done.')
 
     while True:
         # client_socket.send(message.encode())  # send message

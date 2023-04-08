@@ -11,7 +11,6 @@ class Receiver:
 
     def compute_private_key(self):
         self.phi_n = (self.p-1)*(self.q-1)
-        # d = e^-1 mod phi(n)
         self.d = common_functions.mod_inverse_solve(self.e,   self.phi_n)
 
     def send_public_key(self):
@@ -22,28 +21,11 @@ class Receiver:
         self.compute_private_key()
         cipherText = cipherText.split(" ")
         del cipherText[0]
-        # ct = cipherText
-        # splited_message = encryption_functions.splitToGroups(cipherText)
-        # print(splited_message)
-        # c_list = encryption_functions.convertToInt(splited_message)
-        # print('int c = ', c_list)
 
-        # m = encryption_functions.power_mod_solve(c,  math.floor(d), p * q)
         decryptedMessage = ''
-        # decryptedList = []
         for c in cipherText:
-            # print('cipher ', cipherText)
-            m = pow(int(c), self.d) % (self.p*self.q)  # commenttttttt
-            # print(cipherText)
-            # m = pow(int(ct), d) % (p*q) #commenttttttt
+            m = pow(int(c), self.d, (self.p*self.q))
             print('m = ', m, 'c = ', c)
             decryptedMessage = decryptedMessage + \
                 common_functions.convertToString(m)
-            # decryptedList.append(common_functions.convertToString(m))
-            # decryptedMessage = decryptedMessage + encryption_functions.convertToString(c)
-        # print('before convert to string encryption:', m)
-        # print(m)
-        # decryptedMessage = encryption_functions.convertToString(m) # commenntttt
-        # print('string m = ', decryptedMessage)
-        # decryptedMessage = m
         return decryptedMessage

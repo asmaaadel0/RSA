@@ -42,7 +42,7 @@ def CCA(C, n, e):
     del C[0]
     C_dash = []
     for c in C:
-        C_dash.append(int(c) * pow(r, e) % n)
+        C_dash.append(int(c) * pow(r, e, n))
     print('C_dash = ', C_dash)
     cipherText = ''
     for i in C_dash:
