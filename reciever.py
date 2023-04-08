@@ -27,8 +27,8 @@ def reciever_program():
     p = int(input(' enter p -> '))
     q = int(input(' enter q -> '))
 
-    p = 6353
-    q = 8641
+    p = 2953
+    q = 1061
     # e = 3823
 
     print("Validate p,q.... \n")

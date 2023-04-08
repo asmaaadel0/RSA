@@ -30,14 +30,16 @@ class Receiver:
 
         # m = encryption_functions.power_mod_solve(c,  math.floor(d), p * q)
         decryptedMessage = ''
+        # decryptedList = []
         for c in cipherText:
             # print('cipher ', cipherText)
             m = pow(int(c), self.d) % (self.p*self.q)  # commenttttttt
-            print(cipherText)
+            # print(cipherText)
             # m = pow(int(ct), d) % (p*q) #commenttttttt
             print('m = ', m, 'c = ', c)
             decryptedMessage = decryptedMessage + \
                 common_functions.convertToString(m)
+            # decryptedList.append(common_functions.convertToString(m))
             # decryptedMessage = decryptedMessage + encryption_functions.convertToString(c)
         # print('before convert to string encryption:', m)
         # print(m)

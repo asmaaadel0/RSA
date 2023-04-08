@@ -1,6 +1,7 @@
 import numpy as np
-# import random
-# import sympy
+import random
+import sympy
+
 
 def splitToGroups(message):
     splited_message = []
@@ -48,6 +49,7 @@ def convertToString(number):
         string += char
     return string[::-1]
 
+
 def mod_inverse_solve(a, n):
     (b, x) = extended_euclidean_algo(a, n)
     if b < 0:
@@ -62,11 +64,12 @@ def extended_euclidean_algo(a, b):
     k = a // b
     return (y, x - k * y)
 
-# def generate_pq(n):
-#     p=random.getrandbits(int(n/2))
-#     q=random.getrandbits(int(n/2))
-#     while not sympy.isprime(p):
-#         p=random.getrandbits(int(n/2))
-#     while not sympy.isprime(q) or p==q:
-#         q=random.getrandbits(int(n/2))
-#     return p,q
+
+def generate_pq(n):
+    p = random.getrandbits(int(n/2))
+    q = random.getrandbits(int(n/2))
+    while not sympy.isprime(p):
+        p = random.getrandbits(int(n/2))
+    while not sympy.isprime(q) or p == q:
+        q = random.getrandbits(int(n/2))
+    return p, q
