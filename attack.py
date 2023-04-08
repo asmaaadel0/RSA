@@ -20,6 +20,7 @@ def mathematicalAttack(C, n, e):
             Eve.e = e
             Eve.p = p
             break
+    Eve.n = Eve.p*Eve.q
     recovered = Eve.decryption(C)
     return recovered
 
@@ -75,7 +76,8 @@ if time_or_test == "1":
 
     # write data in file that attacker will intercept
     with open('attacks_test.txt', 'w') as f:
-        f.write("it's the cipher text, and public key==> (e, n) that attacker want to attack" + "\n")
+        f.write(
+            "it's the cipher text, and public key==> (e, n) that attacker want to attack" + "\n")
         f.write(str(C) + "\n")
         f.write(str(Bob.e) + "\n")
         f.write(str(Bob.p*Bob.q))
