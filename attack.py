@@ -52,11 +52,11 @@ if time_or_test == "1":
     e = Bob.e
     p = Bob.p
     q = Bob.q
-    
+
     # -------------------- Takes msg from user in the allowed range -------------------
     msg = input("Enter message: ")
 
-    # create encoding to check if the message encoding < n 
+    # create encoding to check if the message encoding < n
     splited_message = common_functions.splitToGroups(msg)
     m = common_functions.convertToInt(splited_message)
 
@@ -110,7 +110,7 @@ elif time_or_test == "2":
     test_file = open("graphs_msg.txt", "r")
     lines = test_file.read().splitlines()
     msg = lines[0]
-    test_file.close() 
+    test_file.close()
 
     # -------------------- Generate p,q for n bits ---------------------
     # put them in text file to use later
@@ -133,7 +133,10 @@ elif time_or_test == "2":
     # access data generated in text file
     Bob_data = open("keylengthVsTimeAttack.txt", "r")
     lines = Bob_data.read().splitlines()
+    # for jumping in lines
     i = 0
+    # for printing only
+    j = 1
 
     # store c, e, n in lists only to save results in a txt file
     C_list = []
@@ -163,6 +166,7 @@ elif time_or_test == "2":
         start_time = time.time()
         recovered = mathematicalAttack(C, n, e)
         end_time = time.time()
+        print(j, '- time = ', end_time - start_time)
 
         # store time
         time_to_attack.append(end_time - start_time)
