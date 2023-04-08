@@ -33,9 +33,8 @@
   - 2 => for test Efficiency
 
 ## Screenshots from Sender and receiver <a name = "screen-shot"></a>
-- Sender: 
+![image](https://user-images.githubusercontent.com/88618793/230746369-5297edfb-8a24-4845-938a-9a099a7595af.png)
 
-- Receiver:
 
 ## Key value VS attack time <a name = "key-value-vs-attack-time"></a>
 ![timeToAttackVSbits](https://user-images.githubusercontent.com/88618793/230743985-fbe33b04-4700-4a28-ac0c-ed43b90f72e1.png)
