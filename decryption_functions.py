@@ -5,6 +5,7 @@ import common_functions
 class Receiver:
     p = 0,
     q = 0,
+    n = 0,
     e = 0,
     phi_n = 0,
     d = 0
@@ -20,12 +21,11 @@ class Receiver:
 
         self.compute_private_key()
         cipherText = cipherText.split(" ")
-        del cipherText[0]
 
+        self.n = self.p*self.q
         decryptedMessage = ''
         for c in cipherText:
-            m = pow(int(c), self.d, (self.p*self.q))
-            print('m = ', m, 'c = ', c)
+            m = pow(int(c), self.d, (self.n))
             decryptedMessage = decryptedMessage + \
                 common_functions.convertToString(m)
         return decryptedMessage

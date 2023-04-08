@@ -19,6 +19,6 @@ class Sender:
         cipherText = ''
         for i in m:
             c = pow(int(i), self.e, self.n)
-            print('m = ', i, 'c = ', c)
             cipherText = cipherText + ' ' + str(c)
+        cipherText = cipherText[1:]        
         return cipherText

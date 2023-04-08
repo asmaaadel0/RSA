@@ -24,10 +24,9 @@ def reciever_program():
 
     print("Generation done! \n")
 
+    print("Generate e.... \n")
     e = generate_key.generate_e((p-1) * (q-1))
-
-    print("public key is validated you can start the communication .. ")
-    print(p, q, e)
+    print("Generation done! \n")
 
     host = socket.gethostname()  # as both code is running on same pc
     port = 5000  # socket server port number
@@ -35,14 +34,10 @@ def reciever_program():
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
 
-    # client_socket.send(str(p).encode())  # send data to the client
     myReceiver.p = int(p)
-    # time.sleep(1)
-
-    # client_socket.send(str(q).encode())  # send data to the client
     myReceiver.q = int(q)
-    # time.sleep(1)
 
+    print('sending public...')
     client_socket.send(str(e).encode())  # send data to the client
     myReceiver.e = int(e)
     time.sleep(1)
@@ -52,14 +47,13 @@ def reciever_program():
     print('sending public key is done.')
 
     while True:
+        print('waiting for message...')
         # client_socket.send(message.encode())  # send message
         C = client_socket.recv(1024).decode()  # receive response
 
         print('cipher text received: ' + C)  # show in terminal
         decryptedMessage = myReceiver.decryption(C)
         print("original message from sender: ", decryptedMessage)
-
-        # message = input(" -> ")  # again take input
 
     client_socket.close()  # close the connection
 

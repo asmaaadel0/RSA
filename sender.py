@@ -23,7 +23,6 @@ def sender_program():
     n = int(conn.recv(1024).decode())  # receive response
 
     print('recieving public key is done.')
-    # print(p, q, e)
     mySender.set_public_key(e, n)
 
     while True:
