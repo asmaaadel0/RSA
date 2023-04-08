@@ -26,7 +26,7 @@ def mathematicalAttack(C, n, e):
 
 
 time_or_test = input(
-    "To test attacks press 1, to test the key length vs time press 2: ")
+    "To test attacks press 1 \nTo test the key length vs attack time press 2\nTo test the key length vs encryption, encryption time press 3\n")
 p = 0
 q = 0
 if time_or_test == "1":
@@ -101,9 +101,7 @@ if time_or_test == "1":
         f.write("Original message: " + msg + "\n")
         f.write("Recovered message: " + recovered + "\n")
         f.close()
-
-    if (msg == recovered):
-        print("The attack is done, hard luck next time!")
+    print("The attack is done, hard luck next time!")
 
 
 # ---------------------------- Plotting -------------------------------
@@ -202,5 +200,72 @@ elif time_or_test == "2":
     ax.set_ylabel("Time to attack")
     plt.show()
 
+elif time_or_test == "3":
+    # generate instanse of sender=> theSender, reciver=> theReceiver
+    theSender = sender.Sender()
+    theReceiver = reciever.Receiver()
+
+    key_lengths = []
+    encryption_time = []
+    decryption_time = []
+
+    # read message to be encrypted
+    test_file = open("graphs_msg.txt", "r")
+    lines = test_file.read().splitlines()
+    message = lines[0]
+    test_file.close()  # close the file
+
+    # read p & q being used to plot the graph
+    test_file = open("efficiencyPQ.txt", "r")
+    lines = test_file.read().splitlines()
+    i = 0
+    while i < len(lines)-1:
+        p = int(lines[i])
+        q = int(lines[i+1])
+        key_lengths.append(len(bin(p*q).replace("0b", "")))
+        i += 3
+        # generate public key e
+        e = generate_key.generate_e((p-1) * (q-1))
+
+        # set values for reciever
+        theReceiver.p = int(p)
+        theReceiver.q = int(q)
+        theReceiver.e = int(e)
+        theReceiver.n = theReceiver.p*theReceiver.q
+
+        # set public key for the sender
+        theSender.set_public_key(e, p*q)
+
+        # encrypt the message
+        start_time = time.time()
+        cipher_text = theSender.encryption(message)
+        end_time = time.time()
+        # store time taken
+        encryption_time.append(end_time - start_time)
+
+        # decrypt the message
+        start_time = time.time()
+        message = theReceiver.decryption(cipher_text)
+        end_time = time.time()
+        # store time taken
+        decryption_time.append(end_time - start_time)
+
+    test_file.close()  # close the file
+    print("time taken for encryption:")
+    print(encryption_time)
+    print("time taken for decryption:")
+    print(decryption_time)
+    print("corresponding key lengths in bits:")
+    print(key_lengths)
+    # plotting the key length VS encryption time (efficiency)
+    plt.plot(key_lengths, encryption_time, color ='tab:blue') 
+    plt.plot(key_lengths, decryption_time, color ='tab:orange') 
+    
+    plt.xlabel('key length in bits')
+    plt.ylabel('encryption time with blue, decryption with orange')
+    plt.title('RSA efficiency')
+    plt.show()
+  
+    
 else:
-    print("Please choose 1 or 2")
+    print("Please choose 1, 2, 3 or 4")
