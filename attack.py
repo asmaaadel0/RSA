@@ -75,6 +75,7 @@ if time_or_test == "1":
 
     # write data in file that attacker will intercept
     with open('attacks_test.txt', 'w') as f:
+        f.write("it's the cipher text, and public key==> (e, n) that attacker want to attack" + "\n")
         f.write(str(C) + "\n")
         f.write(str(Bob.e) + "\n")
         f.write(str(Bob.p*Bob.q))
@@ -82,7 +83,7 @@ if time_or_test == "1":
 
     attacker_data = open('attacks_test.txt', "r")
     lines = attacker_data.read().splitlines()
-    i = 0
+    i = 1
     while i < len(lines)-1:
         C = lines[i]
         e = int(lines[i+1])
@@ -176,7 +177,7 @@ elif time_or_test == "2":
         e_list.append(e)
         n_list.append(n)
         # --------------------------------------------
-
+        j += 1
         i += 3
 
     Bob_data.close()

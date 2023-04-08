@@ -2,25 +2,20 @@ import socket
 import decryption_functions
 import common_functions
 import generate_key
-import time
 
 myReceiver = decryption_functions.Receiver()
 
 
 def reciever_program():
 
-
     print("Generate p,q.... \n")
 
-    p, q = common_functions.gererate_pq_primes();
+    # generate two prime numbers: p, q
+    p, q = common_functions.gererate_pq_primes()
 
     # Print the values of p and q
     print("p:", p)
     print("q:", q)
-
-    # p = 40351
-    # q = 42323
-    # e = 3823
 
     print("Generation done! \n")
 
@@ -32,28 +27,30 @@ def reciever_program():
     port = 5000  # socket server port number
 
     client_socket = socket.socket()  # instantiate
-    client_socket.connect((host, port))  # connect to the server
+    client_socket.connect((host, port))  # connect to the sender
 
     myReceiver.p = int(p)
     myReceiver.q = int(q)
-
-    print('sending public...')
-    client_socket.send(str(e).encode())  # send data to the client
     myReceiver.e = int(e)
-    time.sleep(1)
 
-    client_socket.send(str(p*q).encode())  # send data to the client
+    # calculate n
+    myReceiver.n = myReceiver.p*myReceiver.q
 
-    print('sending public key is done.')
+    print('sending public... \n')
+    # send the public key(e, n) to the sender
+    public_key = str(myReceiver.e) + " " + str(myReceiver.n)
+    client_socket.send(str(public_key).encode())  
+
+    print('sending public key is done. \n')
 
     while True:
         print('waiting for message...')
-        # client_socket.send(message.encode())  # send message
-        C = client_socket.recv(1024).decode()  # receive response
+        C = client_socket.recv(1024).decode()  # receive cipher from sender
 
         print('cipher text received: ' + C)  # show in terminal
         decryptedMessage = myReceiver.decryption(C)
         print("original message from sender: ", decryptedMessage)
+        client_socket.send(str("Decryption Done!").encode())
 
     client_socket.close()  # close the connection
 

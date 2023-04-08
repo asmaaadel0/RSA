@@ -19,8 +19,12 @@ def sender_program():
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
 
-    e = int(conn.recv(1024).decode())  # receive response
-    n = int(conn.recv(1024).decode())  # receive response
+    # receive the public key(e, n) from reciever 
+    public_key = conn.recv(1024).decode()
+    public_key = public_key.split(" ")
+
+    e = int(public_key[0])
+    n = int(public_key[1])
 
     print('recieving public key is done.')
     mySender.set_public_key(e, n)
@@ -37,6 +41,7 @@ def sender_program():
             m = common_functions.convertToInt(splited_message)
         C = mySender.encryption(message)
         conn.send(C.encode())  # send data to the client
+        print(conn.recv(1024).decode())
 
     conn.close()  # close the connection
 
