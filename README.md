@@ -1,12 +1,13 @@
 ## 📝 Table of Contents
 
-- [📝 Table of Contents](#-table-of-contents)
 - [About ](#about-)
 - [Installation ](#installation-)
 - [To stablish communication ](#to-stablish-communication-)
 - [To test attacks ](#to-test-attacks-)
 - [Screenshots from Sender and receiver ](#screenshots-from-sender-and-receiver-)
-- [Efficiency: Key value VS attack time ](#efficiency-key-value-vs-attack-time-)
+- [Key value VS attack time ](#key-value-vs-attack-time-)
+- [Key value VS encryption time ](#encryption-time-)
+- [Key value VS decryption time ](#decryption-time-)
 - [Contributors ](#contributors-)
 
 ## About <a name = "about"></a>
@@ -35,8 +36,14 @@
 
 - Receiver:
 
-## Efficiency: Key value VS attack time <a name = "efficiency-key-attack"></a>
+## Key value VS attack time <a name = "key-value-vs-attack-time"></a>
+![timeToAttackVSbits](https://user-images.githubusercontent.com/88618793/230743985-fbe33b04-4700-4a28-ac0c-ed43b90f72e1.png)
 
+## Key value VS encryption time <a name = "encryption-time"></a>
+![encryptionVSbits](https://user-images.githubusercontent.com/88618793/230743996-e97b0f07-5168-4489-a8ed-60d71562f763.png)
+
+## Key value VS decryption time <a name = "decryption-time"></a>
+![decryptionVSbits](https://user-images.githubusercontent.com/88618793/230744006-af053b7f-d70f-4bd3-b021-4d1a74f56a2f.png)
 
 ## Contributors <a name = "Contributors"></a>
 
