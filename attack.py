@@ -22,8 +22,6 @@ def mathematicalAttack(C, n, e):
     recovered = Eve.decryption(C)
     return recovered
 
-# --------------------------------- CCA ------------------------
-
 
 time_or_test = input(
     "To test attacks press 1, to test the key length vs time press 2: ")
@@ -36,11 +34,7 @@ if time_or_test == "1":
     Bob = reciever.Receiver()
     Alice = sender.Sender()
 
-    p = sympy.randprime((2047), (20048)-1)
-    while True:
-        q = sympy.randprime((2047), (20048)-1)
-        if p != q:
-            break
+    p, q = common_functions.gererate_pq_primes()
 
     # Print the values of p and q
     print("p:", p)
@@ -50,6 +44,7 @@ if time_or_test == "1":
     Bob.q = q
 
     Bob.e = generate_key.generate_e((Bob.p-1) * (Bob.q-1))
+
     e = Bob.e
     p = Bob.p
     q = Bob.q
@@ -69,7 +64,7 @@ if time_or_test == "1":
     Alice.set_public_key(Bob.e, Bob.p*Bob.q,)
 
     C = Alice.encryption(msg)
-    
+
     # write data in file that attacker will intercept
     with open('attacks_test.txt', 'w') as f:
         f.write(str(C) + "\n")
@@ -139,9 +134,8 @@ elif time_or_test == "2":
         Bob.e = generate_key.generate_e((Bob.p-1) * (Bob.q-1))
         e = Bob.e
         #Sender: Alice
-        Alice.set_public_key(Bob.p, Bob.q, Bob.e)
-        cipher_text = Alice.encrypt(msg)
-        C = common_functions.convertToInt(cipher_text)
+        Alice.set_public_key(Bob.e, Bob.p*Bob.q)
+        C = Alice.encryption(msg)
 
         e = Bob.e
         n = Bob.p*Bob.q
@@ -154,6 +148,7 @@ elif time_or_test == "2":
 
         end_time = time.time()
         time_to_attack.append(end_time - start_time)
+        print(i+1, '- time = ', end_time - start_time )
 
         # ----------------- to only save results in a txt file
         C_list.append(C)

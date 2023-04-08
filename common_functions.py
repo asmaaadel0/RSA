@@ -73,3 +73,11 @@ def generate_pq(n):
     while not sympy.isprime(q) or p == q:
         q = random.getrandbits(int(n/2))
     return p, q
+
+def gererate_pq_primes():
+    p = sympy.randprime((2047), (20048)-1)
+    while True:
+        q = sympy.randprime((2047), (20048)-1)
+        if p != q:
+            break
+    return p, q

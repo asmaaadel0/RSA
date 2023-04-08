@@ -1,6 +1,6 @@
 import socket
 import decryption_functions
-import sympy
+import common_functions
 import generate_key
 import time
 
@@ -11,11 +11,8 @@ def reciever_program():
 
 
     print("Generate p,q.... \n")
-    p = sympy.randprime((2047), (20048)-1)
-    while True:
-        q = sympy.randprime((2047), (20048)-1)
-        if p != q:
-            break
+
+    p, q = common_functions.gererate_pq_primes();
 
     # Print the values of p and q
     print("p:", p)
