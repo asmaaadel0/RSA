@@ -4,24 +4,25 @@ import decryption_functions as reciever
 import time
 import matplotlib.pyplot as plt
 
+# generate instanse of sender=> theSender, reciver=> theReceiver
 theSender = sender.Sender()
 theReceiver = reciever.Receiver()
 
 key_lengths = []
 encryption_time = []
 decryption_time = []
+
 # read message to be encrypted
 test_file = open("graphs_msg.txt", "r")
 lines = test_file.read().splitlines()
 message = lines[0]
 test_file.close()  # close the file
 
-# read Os & Qs being used to plot the graph
+# read p & q being used to plot the graph
 test_file = open("efficiencyPQ.txt", "r")
 lines = test_file.read().splitlines()
 i = 0
 while i < len(lines)-1:
-    # read the message and the public key
     p = int(lines[i])
     q = int(lines[i+1])
     key_lengths.append(len(bin(p*q).replace("0b", "")))
@@ -29,11 +30,13 @@ while i < len(lines)-1:
     # generate public key e
     e = generate_key.generate_e((p-1) * (q-1))
 
+    # set values for reciever
     theReceiver.p = int(p)
     theReceiver.q = int(q)
     theReceiver.e = int(e)
     theReceiver.n = theReceiver.p*theReceiver.q
 
+    # set public key for the sender
     theSender.set_public_key(e, p*q)
 
     # encrypt the message
@@ -66,7 +69,6 @@ print("time taken:")
 print(decryption_time)
 print("corresponding key lengths in bits:")
 print(key_lengths)
-
 # plotting the key length VS decryption time (efficiency)
 plt.plot(key_lengths, encryption_time)
 plt.xlabel('key length in bits')
