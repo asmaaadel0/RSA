@@ -11,7 +11,8 @@
 - [Contributors ](#contributors-)
 
 ## About <a name = "about"></a>
-- security project includes communication between sender and receiver with RSA encryption algorithm and breaking it with mathematical attack using python socket
+- security project includes communication between sender and receiver with RSA encryption algorithm and breaking it with mathematical attack using python socket.
+- both sender and receiver can send and receive messages
 
 ## Installation <a name = "installation"></a>
 
