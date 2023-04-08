@@ -3,6 +3,7 @@ import generate_key
 import encryption_functions as sender
 import decryption_functions as reciever
 import time
+import sympy
 import matplotlib.pyplot as plt
 
 # --------------------------------- Mathematical attack ------------------------
@@ -18,98 +19,57 @@ def mathematicalAttack(C, n, e):
             Eve.e = e
             Eve.p = p
             break
-
-    # stringC = ''
-    # print(C)
-    # for c in C:
-    # print(c)
-    # stringC = stringC + " " + c
-
-    # print(stringC)
     recovered = Eve.decryption(C)
     return recovered
 
 # --------------------------------- CCA ------------------------
 
 
-def CCA(C, n, e):
-    # M => C
-    # generate r that is co-prime with n
-    r = generate_key.generate_e(n)
-    # compute C dash that will be sent to Bob using cipher text of the required msg
-    # C` = C r^e mod n
-    C = C.split(" ")
-    del C[0]
-    C_dash = []
-    for c in C:
-        C_dash.append(int(c) * pow(r, e, n))
-    print('C_dash = ', C_dash)
-    cipherText = ''
-    for i in C_dash:
-        cipherText = cipherText + ' ' + str(i)
-    print('cipherText = ', cipherText)
-    # Bob decrypts C dash and sends it back to Eve
-    # Y = (C * r^e)^ d mod n
-
-    Y = Bob.decryption(cipherText)
-    print("Y before split to groups = ", Y)
-    Y = common_functions.splitToGroups(Y)
-    print("Y after split to groups = ", Y)
-    Y = common_functions.convertToInt(Y)
-    # Now, Eve can get the message: Y = (M^e * r^e)^d mod n => as d = e^-1 mod n
-    # so Y= M * r mod n =>  M = Y *(r^-1) mod n so it's very easy to obtain messages
-    # M = common_functions.power_mod_solve((Y * cf.mod_inverse_solve(r, n)), 1, n)
-    # Y = Y.split(" ")
-    print("y = ", Y)
-    recovered = ''
-    for y in Y:
-        M = int(y) * common_functions.mod_inverse_solve(r, n) % n
-        recovered = recovered + common_functions.convertToString(M)
-        print('M = ', M, 'recovered = ', recovered)
-    return recovered
-
-def  ChosenPlainTextAttack():
-    d=0
-    return None
-
 time_or_test = input(
     "To test attacks press 1, to test the key length vs time press 2: ")
 p = 0
 q = 0
 if time_or_test == "1":
-    type = input("For MA press 1, For CCA press 2: ")
+    # type = input("For MA press 1, For CCA press 2: ")
 
     # -------------------- Generate e,n,C for the attacks ------------
     Bob = reciever.Receiver()
     Alice = sender.Sender()
-    Bob_data = open("bob_data.txt", "r")
-    lines = Bob_data.read().splitlines()
-    i = 0
-    while i < len(lines)-1:
-        Bob.p = int(lines[i])
-        Bob.q = int(lines[i+1])
-        i += 3
-    Bob_data.close()
+
+    p = sympy.randprime((2047), (20048)-1)
+    while True:
+        q = sympy.randprime((2047), (20048)-1)
+        if p != q:
+            break
+
+    # Print the values of p and q
+    print("p:", p)
+    print("q:", q)
+
+    Bob.p = p
+    Bob.q = q
+
     Bob.e = generate_key.generate_e((Bob.p-1) * (Bob.q-1))
     e = Bob.e
     p = Bob.p
     q = Bob.q
     # -------------------- Takes msg from user in the allowed range -------------------
     msg = input("Enter message: ")
+
     splited_message = common_functions.splitToGroups(msg)
     m = common_functions.convertToInt(splited_message)
-    # allowed, max = cf.is_key_enough(Bob.p*Bob.q, msg)
+
     while (max(m) > p*q):
         print("max allowed length of message is only ")
         msg = input("Enter message: ")
         splited_message = common_functions.splitToGroups(msg)
         m = common_functions.convertToInt(splited_message)
-        # allowed, max = cf.is_key_enough(Bob.p*Bob.q, msg)
+
     #Sender: Alice
-    Alice.set_public_key(Bob.p, Bob.q, Bob.e)
-    # cipher_text = Alice.encryption(msg)
-    # C = common_functions.convertToInt(cipher_text)
+    Alice.set_public_key(Bob.e, Bob.p*Bob.q,)
+
     C = Alice.encryption(msg)
+    
     # write data in file that attacker will intercept
     with open('attacks_test.txt', 'w') as f:
         f.write(str(C) + "\n")
@@ -128,34 +88,18 @@ if time_or_test == "1":
     attacker_data.close()
 
     # #---------------------------- Mathematical Attack --------------
-    if type == "1":
+    # if type == "1":
 
-        recovered = mathematicalAttack(C, n, e)
+    recovered = mathematicalAttack(C, n, e)
 
-        # write attack results and original message
-        with open('mathematicalAttack_Results.txt', 'w') as f:
-            f.write("Original message: " + msg + "\n")
-            f.write("Recovered message: " + recovered + "\n")
-            f.close()
+    # write attack results and original message
+    with open('mathematicalAttack_Results.txt', 'w') as f:
+        f.write("Original message: " + msg + "\n")
+        f.write("Recovered message: " + recovered + "\n")
+        f.close()
 
+    if (msg == recovered):
         print("The attack is done, hard luck next time!")
-
-    # ------------------------------ CCA ATTACK -----------------
-
-    elif type == "2":
-
-        recovered = ChosenPlainTextAttack(C, n, e)
-
-        # write attack results and original message
-        with open('ChosenPlainTextAttackResult.txt', 'w') as f:
-            f.write("Original message: " + msg + "\n")
-            f.write("Recovered message: " + recovered + "\n")
-            f.close()
-
-        print("The attack is done, hard luck next time!")
-
-    else:
-        print("please choose 1 or 2")
 
 
 # ---------------------------- Plotting -------------------------------

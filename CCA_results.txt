@@ -1,2 +1,0 @@
-Original message: 11111
-Recovered message: e0c8

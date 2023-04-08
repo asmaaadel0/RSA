@@ -3,7 +3,6 @@ import decryption_functions
 import sympy
 import generate_key
 import time
-import random
 
 myReceiver = decryption_functions.Receiver()
 
