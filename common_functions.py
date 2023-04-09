@@ -56,9 +56,8 @@ def convertToString(number):
         string += char
     return string[::-1]
 
+
 # to calculate inverse of e (d)
-
-
 def mod_inverse_solve(a, n):
     (b, x) = extended_euclidean_algo(a, n)
     if b < 0:
@@ -86,8 +85,6 @@ def generate_pq(n):
     return p, q
 
 # generate p, q primes numbers
-
-
 def gererate_pq_primes():
     # any range, I choose this!
     p = sympy.randprime((20000), (200000))
