@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import sympy
+import generate_key
 
 # split message to groups each group in 5 chars, if it's not, add spaces
 
@@ -96,3 +97,60 @@ def gererate_pq_primes():
         if p != q:
             break
     return p, q
+
+def configReceiving(myReceiver, conn):
+    print("Generate p,q....")
+
+    # generate two prime numbers: p, q
+    p, q = gererate_pq_primes()
+
+    # Print the values of p and q
+    print("p:", p)
+    print("q:", q)
+
+    print("Generation done!")
+
+    print("Generate e....")
+    e = generate_key.generate_e((p-1) * (q-1))
+    print("Generation done!")
+
+    myReceiver.p = int(p)
+    myReceiver.q = int(q)
+    myReceiver.e = int(e)
+    # calculate n
+    myReceiver.n = myReceiver.p*myReceiver.q
+
+
+
+    print('sending public...')
+    # send the public key(e, n) to the sender
+    public_key_1 = str(myReceiver.e) + " " + str(myReceiver.n)
+    conn.send(str(public_key_1).encode()) 
+    print('sending public key is done.')
+
+def configSending(mySender, client_socket):
+    print('recieving public...')
+    # receive the public key(e, n) from reciever 
+    public_key = client_socket.recv(1024).decode()
+    public_key = public_key.split(" ")
+
+    e = int(public_key[0])
+    n = int(public_key[1])
+
+    print('recieving public key is done.')
+    mySender.set_public_key(e, n)  
+
+def sendMessage(mySender, client_socket):
+        message = input(' enter message -> ')
+        C = mySender.encryption(message)
+        client_socket.send(C.encode())  # send data to the client
+        print(client_socket.recv(1024).decode())
+
+def receiveMessage(myReceiver, conn):
+        print('waiting for message...')
+        C = conn.recv(1024).decode()  # receive cipher from sender
+
+        print('cipher text received: ' + C)  # show in terminal
+        decryptedMessage = myReceiver.decryption(C)
+        print("original message from sender: ", decryptedMessage)
+        conn.send(str("Decryption Done!").encode())        

@@ -268,4 +268,4 @@ elif time_or_test == "3":
   
     
 else:
-    print("Please choose 1, 2, 3 or 4")
+    print("Please choose 1, 2 or 3")
