@@ -2,7 +2,7 @@
 
 - [About ](#about-)
 - [Installation ](#installation-)
-- [To stablish communication ](#to-stablish-communication-)
+- [How to run ](#run-)
 - [To test attacks ](#to-test-attacks-)
 - [Screen Vedio ](#screen-vedio)
 - [Screenshots from Sender and receiver ](#screen-shot)
@@ -22,11 +22,15 @@
 - pip install matplotlib
 
 - pip install sympy
-## To stablish communication <a name = "communication"></a>
-- First: 
-  - run sender.py 
-- Second: 
-  - run receiver.py
+## How to run <a name = "run"></a>
+- Any IDE or code editor can be able to run python scripts.
+- if you don't have these libraries, install them.
+  - pip install sockets
+  - pip install matplotlib
+  - pip install sympy
+First, We should run the Sender, then the Receiver.
+Both sender and receiver can send and receive messages, The sender sends to the receiver and vice versa time after time in order.
+
 
 ## To test attacks <a name = "attacks"></a>
 - run attacks.py
