@@ -34,7 +34,7 @@
 - run attacks.py
   - 1 => for mathematical attack
   - 2 => for test Efficiency
-  - 
+
 ## Screen Vedio <a name = "screen-vedio"></a>
 
 ### Chatting
