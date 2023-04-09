@@ -22,5 +22,5 @@ def gcd(A, B):
     if B == 0:
         return A
     # recursive till b equals to 0
-    return gcd(B, A % B)
+    return gcd(B, pow(A, 1, B))
 
