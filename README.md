@@ -2,18 +2,19 @@
 
 - [About ](#about-)
 - [Installation ](#installation-)
-- [How to run ](#run-)
+- [How to run ](#run)
 - [To test attacks ](#to-test-attacks-)
 - [Screen Vedio ](#screen-vedio)
 - [Screenshots from Sender and receiver ](#screen-shot)
 - [Key value VS attack time ](#key-value-vs-attack-time-)
-- [Key value VS encryption time ](#encryption-time-)
-- [Key value VS decryption time ](#decryption-time-)
+- [Encryption and Decryption time VS key Length ](#encryption-time-)
 - [Contributors ](#contributors-)
 
 ## About <a name = "about"></a>
 - security project includes communication between sender and receiver with RSA encryption algorithm and breaking it with mathematical attack using python socket.
 - both sender and receiver can send and receive messages
+- I have implemented the RSA encryption algorithm using Python scripts(.py).
+- The project is divided into: common functions, chat module using sockets, RSA encryption and decryption, chosen ciphertext attack(mathematical model)
 
 ## Installation <a name = "installation"></a>
 
@@ -36,7 +37,7 @@ Both sender and receiver can send and receive messages, The sender sends to the 
 - run attacks.py
   - 1 => for mathematical attack
   - 2 => for test Efficiency
-
+  - 
 ## Screen Vedio <a name = "screen-vedio"></a>
 
 ### Chatting
@@ -54,11 +55,8 @@ https://user-images.githubusercontent.com/88618793/230790213-de8c85a4-551d-4623-
 ## Key value VS attack time <a name = "key-value-vs-attack-time"></a>
 ![timeToAttackVSbits](https://user-images.githubusercontent.com/88618793/230743985-fbe33b04-4700-4a28-ac0c-ed43b90f72e1.png)
 
-## Key value VS encryption time <a name = "encryption-time"></a>
-![encryptionVSbits](https://user-images.githubusercontent.com/88618793/230743996-e97b0f07-5168-4489-a8ed-60d71562f763.png)
-
-## Key value VS decryption time <a name = "decryption-time"></a>
-![decryptionVSbits](https://user-images.githubusercontent.com/88618793/230744006-af053b7f-d70f-4bd3-b021-4d1a74f56a2f.png)
+## Key value VS encryption timeEncryption and Decryption time VS key Length <a name = "encryption-time"></a>
+![decenc](https://user-images.githubusercontent.com/88618793/230790974-5742be7f-f5f3-4fb8-8cca-98203a7d30e9.PNG)
 
 ## Contributors <a name = "Contributors"></a>
 
