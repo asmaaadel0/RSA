@@ -7,7 +7,7 @@
 - [Screen Vedio ](#screen-vedio)
 - [Screenshots from Sender and receiver ](#screen-shot)
 - [Key value VS attack time ](#key-value-vs-attack-time-)
-- [Encryption and Decryption time VS key Length ](#encryption-time-)
+- [Encryption and Decryption time VS key Length ](#encryption-time)
 - [Contributors ](#contributors-)
 
 ## About <a name = "about"></a>
@@ -26,11 +26,8 @@
 ## How to run <a name = "run"></a>
 - Any IDE or code editor can be able to run python scripts.
 - if you don't have these libraries, install them.
-  - pip install sockets
-  - pip install matplotlib
-  - pip install sympy
-First, We should run the Sender, then the Receiver.
-Both sender and receiver can send and receive messages, The sender sends to the receiver and vice versa time after time in order.
+- First, We should run the Sender, then the Receiver.
+- Both sender and receiver can send and receive messages, The sender sends to the receiver and vice versa time after time in order.
 
 
 ## To test attacks <a name = "attacks"></a>
