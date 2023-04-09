@@ -76,10 +76,10 @@ def generate_pq(n):
 # generate p, q primes numbers
 def gererate_pq_primes():
     # any range, I choose this!
-    p = sympy.randprime((9999), (200000))
+    p = sympy.randprime((20000), (200000))
     while True:
         # q = sympy.randprime(2**(2047), 2**(20048)-1)
-        q = sympy.randprime((9999), (200000))
+        q = sympy.randprime((20000), (200000))
         if p != q:
             break
     return p, q

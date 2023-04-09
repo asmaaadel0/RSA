@@ -67,13 +67,6 @@ def reciever_program():
 
 
         message = input(' enter message -> ')
-        splited_message = common_functions.splitToGroups(message)
-        m = common_functions.convertToInt(splited_message)
-        while (max(m) > n):
-            print("max allowed length of message is only ")
-            message = input("-> ")
-            splited_message = common_functions.splitToGroups(message)
-            m = common_functions.convertToInt(splited_message)
         C = mySender.encryption(message)
         client_socket.send(C.encode())  # send data to the client
         print(client_socket.recv(1024).decode())
