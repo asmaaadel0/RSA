@@ -46,10 +46,10 @@ def convertToString(number):
     string = ''
     char = ''
     while number > 0:
-        if (pow(number, 1, 37) in range(0, 10)):
-            char = str(pow(number, 1, 37))
-        elif (pow(number, 1, 37) in range(10, 36)):
-            char = chr(pow(number, 1, 37) + 87)
+        if (number % 37 in range(0, 10)):
+            char = str(number % 37)
+        elif (number % 37 in range(10, 36)):
+            char = chr(number % 37 + 87)
         else:
             char = chr(32)
         number //= 37
@@ -61,14 +61,14 @@ def convertToString(number):
 def mod_inverse_solve(a, n):
     (b, x) = extended_euclidean_algo(a, n)
     if b < 0:
-        b = pow((pow(b, 1, n) + n), 1, n)   # get rid of -ve numbers
+        b = (b % n + n) % n  # get rid of -ve numbers
     return b
 
 
 def extended_euclidean_algo(a, b):
     if b == 0:
         return (1, 0)
-    (x, y) = extended_euclidean_algo(b, pow(a, 1, b))
+    (x, y) = extended_euclidean_algo(b,  a % b)
     k = a // b
     return (y, x - k * y)
 
@@ -85,6 +85,8 @@ def generate_pq(n):
     return p, q
 
 # generate p, q primes numbers
+
+
 def gererate_pq_primes():
     # any range, I choose this!
     p = sympy.randprime((20000), (200000))
@@ -94,6 +96,7 @@ def gererate_pq_primes():
         if p != q:
             break
     return p, q
+
 
 def configReceiving(myReceiver, conn):
     print("Generate p,q....")
@@ -117,17 +120,16 @@ def configReceiving(myReceiver, conn):
     # calculate n
     myReceiver.n = myReceiver.p*myReceiver.q
 
-
-
     print('sending public...')
     # send the public key(e, n) to the sender
     public_key_1 = str(myReceiver.e) + " " + str(myReceiver.n)
-    conn.send(str(public_key_1).encode()) 
+    conn.send(str(public_key_1).encode())
     print('sending public key is done.')
+
 
 def configSending(mySender, client_socket):
     print('recieving public...')
-    # receive the public key(e, n) from reciever 
+    # receive the public key(e, n) from reciever
     public_key = client_socket.recv(1024).decode()
     public_key = public_key.split(" ")
 
@@ -135,19 +137,21 @@ def configSending(mySender, client_socket):
     n = int(public_key[1])
 
     print('recieving public key is done.')
-    mySender.set_public_key(e, n)  
+    mySender.set_public_key(e, n)
+
 
 def sendMessage(mySender, client_socket):
-        message = input(' enter message -> ')
-        C = mySender.encryption(message)
-        client_socket.send(C.encode())  # send data to the client
-        print(client_socket.recv(1024).decode())
+    message = input(' enter message -> ')
+    C = mySender.encryption(message)
+    client_socket.send(C.encode())  # send data to the client
+    print(client_socket.recv(1024).decode())
+
 
 def receiveMessage(myReceiver, conn):
-        print('waiting for message...')
-        C = conn.recv(1024).decode()  # receive cipher from sender
+    print('waiting for message...')
+    C = conn.recv(1024).decode()  # receive cipher from sender
 
-        print('cipher text received: ' + C)  # show in terminal
-        decryptedMessage = myReceiver.decryption(C)
-        print("original message from sender: ", decryptedMessage)
-        conn.send(str("Decryption Done!").encode())        
+    print('cipher text received: ' + C)  # show in terminal
+    decryptedMessage = myReceiver.decryption(C)
+    print("original message from sender: ", decryptedMessage)
+    conn.send(str("Decryption Done!").encode())

@@ -15,7 +15,7 @@ def mathematicalAttack(C, n, e):
 
     # since n is composite then one of its factors is <=sqrt(n)
     for p in range(2, int((n**0.5)+1)):
-        if pow(n, 1, p) == 0:
+        if n%p == 0:
             Eve.q = n//p
             Eve.e = e
             Eve.p = p
