@@ -125,7 +125,7 @@ while True:
         # -------------------- Generate p,q for n bits ---------------------
         # put them in text file to use later
         with open('keylengthVsTimeAttack.txt', 'w') as f:
-            for n in range(27, 70, 1):
+            for n in range(27, 132, 1):
                 p, q = common_functions.generate_pq(n)
                 f.write(str(p) + "\n")
                 f.write(str(q) + "\n")
