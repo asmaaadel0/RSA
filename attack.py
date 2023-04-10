@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 
 def mathematicalAttack(C, n, e):
+    C = C.split(" ")
     recovered = ''
     # generate instans of reciever (attacker)
     Eve = reciever.Receiver()
@@ -21,7 +22,9 @@ def mathematicalAttack(C, n, e):
             Eve.p = p
             break
     Eve.n = Eve.p*Eve.q
-    recovered = Eve.decryption(C)
+    for c in C:
+        recovered = recovered + Eve.decryption(c)
+    
     return recovered
 
 
@@ -57,23 +60,19 @@ if time_or_test == "1":
     # -------------------- Takes msg from user in the allowed range -------------------
     msg = input("Enter message: ")
 
-    # create encoding to check if the message encoding < n
-    splited_message = common_functions.splitToGroups(msg)
-    m = common_functions.convertToInt(splited_message)
-
-    # while the m > n then wait for another message
-    while (max(m) > p*q):
-        print("max allowed length of message is only ")
-        msg = input("Enter message: ")
-        splited_message = common_functions.splitToGroups(msg)
-        m = common_functions.convertToInt(splited_message)
-
     # Sender: Alice ==> public key (e, n)
     Alice.set_public_key(Bob.e, Bob.p*Bob.q)
 
-    # encrypt the message
-    C = Alice.encryption(msg)
 
+    splited_message = common_functions.splitToGroups(msg)
+    # encode the groups, convert them to integer
+    m, count = common_functions.convertToInt(splited_message)
+    # caluclate the cipher Text
+    C = ''
+    for i in m:
+        c = Alice.encryption(i)
+        C = C + " " + str(c)
+    C = C[1:]
     # write data in file that attacker will intercept
     with open('attacks_test.txt', 'w') as f:
         f.write(
@@ -155,8 +154,15 @@ elif time_or_test == "2":
 
         # Sender: Alice ==> public key (e, n)
         Alice.set_public_key(Bob.e, Bob.p*Bob.q)
-
-        C = Alice.encryption(msg)
+        splited_message = common_functions.splitToGroups(msg)
+        # encode the groups, convert them to integer
+        m, count = common_functions.convertToInt(splited_message)
+        # caluclate the cipher Text
+        C = ''
+        for ii in m:
+            c = Alice.encryption(ii)
+            C = C + " " + str(c)
+        C = C[1:]
 
         e = Bob.e
         n = Bob.p*Bob.q
@@ -235,20 +241,36 @@ elif time_or_test == "3":
 
         # set public key for the sender
         theSender.set_public_key(e, p*q)
+        time1 = 0
+        time2 = 0
 
-        # encrypt the message
-        start_time = time.time()
-        cipher_text = theSender.encryption(message)
-        end_time = time.time()
-        # store time taken
-        encryption_time.append(end_time - start_time)
+        splited_message = common_functions.splitToGroups(message)
+        # encode the groups, convert them to integer
+        m, count = common_functions.convertToInt(splited_message)
+        # caluclate the cipher Text
+        C = ''
+        decryptedMessage = ''
+        for ii in m:
+            # decrypt the message
+            start_time = time.time()
+            c = theSender.encryption(ii)
+            end_time = time.time()
+            time1 = time1 + (end_time - start_time)
 
-        # decrypt the message
-        start_time = time.time()
-        message = theReceiver.decryption(cipher_text)
-        end_time = time.time()
+            # decrypt the message
+            start_time = time.time()
+            decryptedc = theReceiver.decryption(c)
+            end_time = time.time()
+            time2 = time2 + (end_time - start_time)
+            decryptedMessage = decryptedMessage + decryptedc
+
+
         # store time taken
-        decryption_time.append(end_time - start_time)
+        encryption_time.append(time1)
+
+        
+        # store time taken
+        decryption_time.append(time2)
 
     test_file.close()  # close the file
     print("time taken for encryption:")

@@ -1,6 +1,7 @@
 import generate_key
 import encryption_functions as sender
 import decryption_functions as reciever
+import common_functions
 import time
 import matplotlib.pyplot as plt
 
@@ -38,20 +39,36 @@ while i < len(lines)-1:
 
     # set public key for the sender
     theSender.set_public_key(e, p*q)
+    time1 = 0
+    time2 = 0
 
-    # encrypt the message
-    start_time = time.time()
-    cipher_text = theSender.encryption(message)
-    end_time = time.time()
-    # store time taken
-    encryption_time.append(end_time - start_time)
+    splited_message = common_functions.splitToGroups(message)
+    # encode the groups, convert them to integer
+    m, count = common_functions.convertToInt(splited_message)
+    # caluclate the cipher Text
+    C = ''
+    decryptedMessage = ''
+    for ii in m:
+        # decrypt the message
+        start_time = time.time()
+        c = theSender.encryption(ii)
+        end_time = time.time()
+        time1 = time1 + (end_time - start_time)
 
-    # decrypt the message
-    start_time = time.time()
-    message = theReceiver.decryption(cipher_text)
-    end_time = time.time()
+        # decrypt the message
+        start_time = time.time()
+        decryptedc = theReceiver.decryption(c)
+        end_time = time.time()
+        time2 = time2 + (end_time - start_time)
+        decryptedMessage = decryptedMessage + decryptedc
+
+
     # store time taken
-    decryption_time.append(end_time - start_time)
+    encryption_time.append(time1)
+
+    
+    # store time taken
+    decryption_time.append(time2)
 
 test_file.close()  # close the file
 print("time taken:")
