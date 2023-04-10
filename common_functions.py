@@ -2,6 +2,7 @@ import numpy as np
 import random
 import sympy
 import generate_key
+import time
 
 # split message to groups each group in 5 chars, if it's not, add spaces
 
@@ -23,7 +24,9 @@ def splitToGroups(message):
 
 def convertToInt(splited_message):
     numbers = []
+    count = 0
     for group in splited_message:
+        count += 1
         plaintext_number = 0
         number = 0
         i = 4
@@ -37,7 +40,7 @@ def convertToInt(splited_message):
             plaintext_number = plaintext_number + 37**i * number
             i = i - 1
         numbers.append(plaintext_number)
-    return numbers
+    return numbers, count
 
 # decoding the integer groups convert it back to string
 
@@ -142,16 +145,30 @@ def configSending(mySender, client_socket):
 
 def sendMessage(mySender, client_socket):
     message = input(' enter message -> ')
-    C = mySender.encryption(message)
-    client_socket.send(C.encode())  # send data to the client
+    # split the message to groups
+    splited_message = splitToGroups(message)
+    # encode the groups, convert them to integer
+    m, count = convertToInt(splited_message)
+    client_socket.send(str(count).encode())  # send data to the client
+    # caluclate the cipher Text
+    for i in m:
+        c = mySender.encryption(i)
+        client_socket.send(str(c).encode())  # send data to the client
+        time.sleep(0.01)
     print(client_socket.recv(1024).decode())
 
 
 def receiveMessage(myReceiver, conn):
     print('waiting for message...')
-    C = conn.recv(1024).decode()  # receive cipher from sender
-
-    print('cipher text received: ' + C)  # show in terminal
-    decryptedMessage = myReceiver.decryption(C)
+    # receive number of packets from sender
+    count = int(conn.recv(1024).decode())
+    decryptedMessage = ''
+    while count > 0:
+        print(count)
+        c = conn.recv(1024).decode()  # receive cipher from sender
+        print('cipher text received: ' + c)  # show in terminal
+        decryptedc = myReceiver.decryption(c)
+        decryptedMessage = decryptedMessage + decryptedc
+        count -= 1
     print("original message from sender: ", decryptedMessage)
     conn.send(str("Decryption Done!").encode())
