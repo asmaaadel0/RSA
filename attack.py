@@ -212,9 +212,9 @@ while True:
         fig, ax = plt.subplots()
         # ax.set_xticklabels(key_lengths)
         ax.plot(key_lengths, time_to_attack, linewidth=2.0)
-        ax.set_title("Key length vs Time to attack")
-        ax.set_xlabel("Key value")
-        ax.set_ylabel("Time to attack")
+        ax.set_title("Key length(bits) vs Time to attack")
+        ax.set_xlabel("Key length(bits)")
+        ax.set_ylabel("Time to attack (s)")
         plt.show()
     
     else:
