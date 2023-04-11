@@ -148,7 +148,6 @@ def receiveMessage(myReceiver, conn):
     count = int(conn.recv(1024).decode())
     decryptedMessage = ''
     while count > 0:
-        print(count)
         c = conn.recv(1024).decode()  # receive cipher from sender
         print('cipher text received: ' + c)  # show in terminal
         decryptedc = myReceiver.decryption(c)
