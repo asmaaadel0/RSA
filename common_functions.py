@@ -62,7 +62,7 @@ def mod_inverse_solve(a, n):
     return pow(a, -1, n)
 
 
-# prime factorization, generate p, q from n for attack
+# generate p, q to make the key length = n
 def generate_pq(n):
     p = random.getrandbits(int(n/2))
     q = random.getrandbits(int(n/2))
