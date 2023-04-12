@@ -1,6 +1,6 @@
 
 import random
-
+import math
 # generate e, coprime with phi n
 
 
@@ -15,7 +15,7 @@ def generate_e(num):
 
 
 def coprimes(A, B):
-    if (gcd(A, B) == 1):
+    if (math.gcd(A, B) == 1):
         return True
     else:
         return False
