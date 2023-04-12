@@ -20,7 +20,7 @@ class Receiver:
         if(self.key_computed == False):
             self.compute_private_key()
             self.key_computed = True
-
+            
         m = pow(int(c), self.d, (self.n))
         decryptedM = common_functions.convertToString(m)
         return decryptedM

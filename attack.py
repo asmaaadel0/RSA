@@ -16,17 +16,18 @@ def mathematicalAttack(C, n, e):
     Eve = reciever.Receiver()
 
     # # since n is composite then one of its factors is <=sqrt(n)
-    # for p in range(2, int((n**0.5)+1)):
-    #     if n%p == 0:
-    #         Eve.q = n//p
-    #         Eve.e = e
-    #         Eve.p = p
-    #         break   
+    for p in range(2, int((n**0.5)+1)):
+        if n%p == 0:
+            Eve.q = n//p
+            Eve.e = e
+            Eve.p = p
+            break   
 
     # sympy.factorint(n) function get the prime factoriztion quickly
-    Eve.q, Eve.p = sympy.factorint(n)    
+    # Eve.q, Eve.p = sympy.factorint(n)    
     Eve.e = e
     Eve.n = Eve.p*Eve.q
+    Eve.key_computed = False
     for c in C:
         recovered = recovered + Eve.decryption(c)
     
@@ -125,7 +126,7 @@ while True:
         # -------------------- Generate p,q for n bits ---------------------
         # put them in text file to use later
         with open('keylengthVsTimeAttack.txt', 'w') as f:
-            for n in range(27, 132, 1):
+            for n in range(27, 65, 1):
                 p, q = common_functions.generate_pq(n)
                 f.write(str(p) + "\n")
                 f.write(str(q) + "\n")
@@ -160,13 +161,14 @@ while True:
 
             # generate e that coprime with p, q
             Bob.e = generate_key.generate_e((Bob.p-1) * (Bob.q-1))
-            e = Bob.e
 
             # Sender: Alice ==> public key (e, n)
             Alice.set_public_key(Bob.e, Bob.p*Bob.q)
+
             splited_message = common_functions.splitToGroups(msg)
             # encode the groups, convert them to integer
             m, count = common_functions.convertToInt(splited_message)
+
             # caluclate the cipher Text
             C = ''
             for ii in m:
@@ -174,15 +176,12 @@ while True:
                 C = C + " " + str(c)
             C = C[1:]
 
-            e = Bob.e
-            n = Bob.p*Bob.q
-
             # key_lengths.append(len(bin(n).replace("0b", "")))
             key_lengths.append(j)
 
             # calculate time
             start_time = time.time()
-            recovered = mathematicalAttack(C, n, e)
+            recovered = mathematicalAttack(C, Bob.p*Bob.q, Bob.e)
             end_time = time.time()
             print('number of bits = ', j, '- Take time = ', end_time - start_time)
 
@@ -191,8 +190,8 @@ while True:
 
             # ----------------- to only save results in a txt file
             C_list.append(C)
-            e_list.append(e)
-            n_list.append(n)
+            e_list.append(Bob.e)
+            n_list.append(Bob.p*Bob.q)
             # --------------------------------------------
             j += 1
             i += 3
