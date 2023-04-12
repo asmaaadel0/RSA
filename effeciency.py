@@ -15,13 +15,13 @@ decryption_time = []
 
 # -------------------- Generate p,q for n bits ---------------------
 # put them in text file to use later
-with open('efficiencyPQ.txt', 'w') as f:
-    for n in range(27, 3000, 1):
-        p, q = common_functions.generate_pq(n)
-        f.write(str(p) + "\n")
-        f.write(str(q) + "\n")
-        f.write("\n")
-f.close()
+# with open('efficiencyPQ.txt', 'w') as f:
+#     for n in range(27, 3000, 1):
+#         p, q = common_functions.generate_pq(n)
+#         f.write(str(p) + "\n")
+#         f.write(str(q) + "\n")
+#         f.write("\n")
+# f.close()
 
 # read message to be encrypted
 test_file = open("graphs_msg.txt", "r")

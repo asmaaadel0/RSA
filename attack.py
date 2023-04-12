@@ -125,13 +125,13 @@ while True:
 
         # -------------------- Generate p,q for n bits ---------------------
         # put them in text file to use later
-        with open('keylengthVsTimeAttack.txt', 'w') as f:
-            for n in range(27, 65, 1):
-                p, q = common_functions.generate_pq(n)
-                f.write(str(p) + "\n")
-                f.write(str(q) + "\n")
-                f.write("\n")
-        f.close()
+        # with open('keylengthVsTimeAttack.txt', 'w') as f:
+        #     for n in range(1, 65, 2):
+        #         p, q = common_functions.generate_pq(n)
+        #         f.write(str(p) + "\n")
+        #         f.write(str(q) + "\n")
+        #         f.write("\n")
+        # f.close()
 
         # ---------------------------------------------------
         # store key_lengths, time_to_attack in lists to compare and plot later
@@ -147,7 +147,7 @@ while True:
         # for jumping in lines
         i = 0
         # for printing only
-        j = 27
+        j = 1
 
         # store c, e, n in lists only to save results in a txt file
         C_list = []
@@ -193,7 +193,7 @@ while True:
             e_list.append(Bob.e)
             n_list.append(Bob.p*Bob.q)
             # --------------------------------------------
-            j += 1
+            j += 2
             i += 3
 
         Bob_data.close()
