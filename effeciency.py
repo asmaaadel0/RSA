@@ -16,7 +16,7 @@ decryption_time = []
 # -------------------- Generate p,q for n bits ---------------------
 # put them in text file to use later
 with open('efficiencyPQ.txt', 'w') as f:
-    for n in range(27, 170, 1):
+    for n in range(27, 3000, 1):
         p, q = common_functions.generate_pq(n)
         f.write(str(p) + "\n")
         f.write(str(q) + "\n")
@@ -49,7 +49,7 @@ while i < len(lines)-1:
     theReceiver.q = int(q)
     theReceiver.e = int(e)
     theReceiver.n = theReceiver.p*theReceiver.q
-
+    theReceiver.key_computed = False
     # set public key for the sender
     theSender.set_public_key(e, p*q)
     time1 = 0
