@@ -6,7 +6,7 @@
 - [To test attacks ](#to-test-attacks-)
 - [Screen Vedio ](#screen-vedio)
 - [Screenshots from Sender and receiver ](#screen-shot)
-- [Key value VS attack time ](#key-value-vs-attack-time-)
+- [Key Length VS attack time ](#key-value-vs-attack-time-)
 - [Encryption and Decryption time VS key Length ](#encryption-time)
 - [Contributors ](#contributors-)
 
@@ -49,11 +49,11 @@ https://user-images.githubusercontent.com/88618793/231214412-aa80af70-ab8d-46f1-
 ## Screenshots from Sender and receiver <a name = "screen-shot"></a>
 ![chat](https://user-images.githubusercontent.com/88618793/231214684-45d38d49-cd84-4ba7-b999-41da04c66c4e.PNG)
 
-## Key value VS attack time <a name = "key-value-vs-attack-time"></a>
-![timeToAttackVSbits2](https://user-images.githubusercontent.com/88618793/231214745-90e1b769-67f2-4bf1-a45c-7a1dc039b24a.png)
+## Key Length VS attack time <a name = "key-value-vs-attack-time"></a>
+![attack](https://user-images.githubusercontent.com/88618793/231318004-d81033cb-6187-4a8e-bafe-f36f9d236a26.png)
 
-## Key value VS encryption timeEncryption and Decryption time VS key Length <a name = "encryption-time"></a>
-![image](https://user-images.githubusercontent.com/88618793/231215440-c3b94c08-dd08-4070-b832-aa05221292b4.png)
+## Key Length VS encryption timeEncryption and Decryption time VS key Length <a name = "encryption-time"></a>
+![Capture](https://user-images.githubusercontent.com/88618793/231317935-2562982b-c985-4876-9af1-cdf03548bfc5.PNG)
 
 ## Contributors <a name = "Contributors"></a>
 
