@@ -52,8 +52,8 @@ https://user-images.githubusercontent.com/88618793/231214412-aa80af70-ab8d-46f1-
 ## Key Length VS attack time <a name = "key-value-vs-attack-time"></a>
 ![attack](https://user-images.githubusercontent.com/88618793/231318004-d81033cb-6187-4a8e-bafe-f36f9d236a26.png)
 
-## Key Length VS encryption timeEncryption and Decryption time VS key Length <a name = "encryption-time"></a>
-![Capture](https://user-images.githubusercontent.com/88618793/231317935-2562982b-c985-4876-9af1-cdf03548bfc5.PNG)
+## Encryption and Decryption time VS key Length <a name = "encryption-time"></a>
+![image](https://user-images.githubusercontent.com/88618793/231521995-593ae4ee-01f1-4f95-8b18-df79e4a9ae1f.png)
 
 ## Contributors <a name = "Contributors"></a>
 
