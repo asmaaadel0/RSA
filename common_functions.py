@@ -62,6 +62,19 @@ def mod_inverse_solve(a, n):
     return pow(a, -1, n)
 
 
+# def extended_euclidean_algo(a, b):
+#     if b == 0:
+#         return (1, 0)
+#     (x, y) = extended_euclidean_algo(b, a % b)
+#     k = a // b
+#     return (y, x - k * y)
+# # b = a^-1 mod n              
+# def mod_inverse_solve(a, n):
+#     (b, x) = extended_euclidean_algo(a, n)
+#     if b < 0:
+#         b = (b % n + n) % n # get rid of -ve numbers
+#     return b   
+
 # generate p, q to make the key length = n
 def generate_pq(n):
     p = random.getrandbits(int(n/2))
